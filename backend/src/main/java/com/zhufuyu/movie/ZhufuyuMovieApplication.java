@@ -1,11 +1,17 @@
-package com.zhufuyu.bless;
+package com.zhufuyu.movie;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.zhufuyu.bless", "com.zhufuyu.movie"})
+@EnableJpaRepositories(basePackages = {"com.zhufuyu.bless.repository"})
+@EntityScan(basePackages = {"com.zhufuyu.bless.entity"})
 @ConfigurationPropertiesScan
+@EnableAsync
 public class ZhufuyuMovieApplication {
 
     public static void main(String[] args) {

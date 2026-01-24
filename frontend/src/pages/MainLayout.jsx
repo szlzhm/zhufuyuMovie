@@ -10,6 +10,7 @@ export default function MainLayout() {
   const [activeMenu, setActiveMenu] = useState('home');
   const [showSystemConfig, setShowSystemConfig] = useState(false);
   const [showMaterialManage, setShowMaterialManage] = useState(false);
+  const [showImageCreation, setShowImageCreation] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -72,6 +73,17 @@ export default function MainLayout() {
       setShowMaterialManage(true);
     } else if (location.pathname.includes('chatbot')) {
       setActiveMenu('chatbot');
+    } else if (location.pathname.includes('image-creation')) {
+      setShowImageCreation(true);
+      if (location.pathname.includes('template')) {
+        setActiveMenu('image-creation-template');
+      } else if (location.pathname.includes('submit')) {
+        setActiveMenu('image-creation-submit');
+      } else if (location.pathname.includes('task')) {
+        setActiveMenu('image-creation-task');
+      } else if (location.pathname.includes('result')) {
+        setActiveMenu('image-creation-result');
+      }
     }
   }, [location]);
 
@@ -143,6 +155,43 @@ export default function MainLayout() {
           >
             ChatBot
           </div>
+          <div className="menu-item" onClick={() => setShowImageCreation(!showImageCreation)}>
+            图片创作 {showImageCreation ? '▼' : '▶'}
+          </div>
+          {showImageCreation && (
+            <div className="submenu">
+              <div 
+                className={`menu-item ${activeMenu === 'image-creation-template' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('image-creation-template', '/image-creation/template')}
+              >
+                提示语模板管理
+              </div>
+              <div 
+                className={`menu-item ${activeMenu === 'image-creation-submit' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('image-creation-submit', '/image-creation/submit')}
+              >
+                提示语提交
+              </div>
+              <div 
+                className={`menu-item ${activeMenu === 'negative-prompt' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('negative-prompt', '/negative-prompt')}
+              >
+                负面提示语管理
+              </div>
+              <div 
+                className={`menu-item ${activeMenu === 'image-creation-task' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('image-creation-task', '/image-creation/task')}
+              >
+                创作任务管理
+              </div>
+              <div 
+                className={`menu-item ${activeMenu === 'image-creation-result' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('image-creation-result', '/image-creation/result')}
+              >
+                创作结果列表
+              </div>
+            </div>
+          )}
           <div 
             className={`menu-item ${activeMenu === 'bless-video' ? 'active' : ''}`}
             onClick={() => handleMenuClick('bless-video', '/bless-video')}
@@ -218,6 +267,10 @@ export default function MainLayout() {
             {activeMenu === 'music-material' && '素材管理 - 背景音乐管理'}
             {activeMenu === 'text-to-image' && '素材管理 - 文生图功能'}
             {activeMenu === 'chatbot' && '素材管理 - ChatBot'}
+            {activeMenu === 'image-creation-template' && '图片创作 - 提示语模板管理'}
+            {activeMenu === 'image-creation-submit' && '图片创作 - 提示语提交'}
+            {activeMenu === 'image-creation-task' && '图片创作 - 创作任务管理'}
+            {activeMenu === 'image-creation-result' && '图片创作 - 创作结果列表'}
             {activeMenu === 'bless-video' && '祝福语视频管理'}
             {activeMenu === 'video-task' && '创作祝福语视频'}
           </div>

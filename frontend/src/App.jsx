@@ -18,6 +18,11 @@ import BlessVideoPage from './pages/BlessVideoPage.jsx';
 import VideoTaskPage from './pages/VideoTaskPage.jsx';
 import TextToImagePage from './pages/TextToImagePage.jsx';
 import ChatBotPage from './pages/ChatBotPage.jsx';
+import ImagePromptTemplatePage from './pages/imageCreation/ImagePromptTemplatePage.jsx';
+import ImagePromptSubmitPage from './pages/imageCreation/ImagePromptSubmitPage.jsx';
+import NegativePromptManagePage from './pages/imageCreation/NegativePromptManagePage.jsx';
+import ImageTaskManagePage from './pages/imageCreation/ImageTaskManagePage.jsx';
+import ImageResultListPage from './pages/imageCreation/ImageResultListPage.jsx';
 
 export default function App() {
   return (
@@ -39,6 +44,11 @@ export default function App() {
           <Route path="/video-task" element={<VideoTaskPage />} />
           <Route path="/text-to-image" element={<TextToImagePage />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
+          <Route path="/image-creation/template" element={<ImagePromptTemplatePage />} />
+          <Route path="/image-creation/submit" element={<ImagePromptSubmitPage />} />
+          <Route path="/negative-prompt" element={<NegativePromptManagePage />} />
+          <Route path="/image-creation/task" element={<ImageTaskManagePage />} />
+          <Route path="/image-creation/result" element={<ImageResultListPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

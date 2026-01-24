@@ -38,6 +38,14 @@ public class FileConfigServiceImpl implements FileConfigService {
         resp.setRootPath(config.getConfigValue());
         return resp;
     }
+    
+    @Override
+    public String getFileRootPathValue() {
+        // 无需权限检查，供内部使用
+        SysConfigEntity config = sysConfigRepository.findByConfigKey(FILE_ROOT_PATH_KEY)
+                .orElse(null);
+        return config != null ? config.getConfigValue() : "E:/data/bless/";
+    }
 
     @Override
     public void updateFileRootPath(FileRootPathUpdateReq request) {

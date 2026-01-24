@@ -59,13 +59,8 @@ public class SystemConfigDataInit implements CommandLineRunner {
                 log.info("删除测试情绪: {}", e.getEmotionCode());
             });
 
-        // 删除测试图片分类数据（包括旧数据）
-        sysImageCategoryRepository.deleteAll();
-        log.info("清空图片分类表");
-
-        // 删除测试文案分类数据（包括旧数据）
-        sysTextCategoryRepository.deleteAll();
-        log.info("清空文案分类表");
+        // Note: No longer clearing image/text categories to prevent duplicate key errors on restart
+        log.info("清理测试数据完成");
     }
 
     private void initSystemConfig() {
@@ -108,6 +103,11 @@ public class SystemConfigDataInit implements CommandLineRunner {
     }
 
     private void initImageCategories() {
+        if (sysImageCategoryRepository.count() > 0) {
+            log.info("图片分类数据已存在，跳过初始化");
+            return;
+        }
+        
         // 一级分类
         SysImageCategoryEntity scene = createImageCategory("SCENE", "场景", "各种场景类图片", null, 1);
         SysImageCategoryEntity festival = createImageCategory("FESTIVAL", "节日", "各种节日类图片", null, 2);
@@ -132,6 +132,11 @@ public class SystemConfigDataInit implements CommandLineRunner {
     }
 
     private void initTextCategories() {
+        if (sysTextCategoryRepository.count() > 0) {
+            log.info("文案分类数据已存在，跳过初始化");
+            return;
+        }
+        
         // 一级分类
         SysTextCategoryEntity blessType = createTextCategory("BLESS_TYPE", "祝福类型", "各种祝福类型文案", null, 1);
         SysTextCategoryEntity useScene = createTextCategory("USE_SCENE", "使用场景", "各种使用场景文案", null, 2);

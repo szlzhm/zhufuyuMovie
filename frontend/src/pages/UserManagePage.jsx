@@ -204,12 +204,15 @@ export default function UserManagePage() {
                     >
                       重置密码
                     </button>
-                    <button
-                      className="btn-link"
-                      onClick={() => handleToggleStatus(user.id, user.status)}
-                    >
-                      {user.status === 1 ? '禁用' : '启用'}
-                    </button>
+                    {/* 管理员不显示禁用按钮 */}
+                    {user.role !== 'ADMIN' && (
+                      <button
+                        className="btn-link"
+                        onClick={() => handleToggleStatus(user.id, user.status)}
+                      >
+                        {user.status === 1 ? '禁用' : '启用'}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))

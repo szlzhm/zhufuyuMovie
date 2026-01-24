@@ -125,8 +125,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         SysUserEntity entity = sysUserRepository.findById(request.getUserId())
                 .orElseThrow(() -> new BizException(10009, "用户不存在"));
         
-        if ("admin".equals(entity.getUsername())) {
-            throw new BizException(10010, "不能禁用admin用户");
+        // 不允许禁用admin用户，也不允许禁用任何管理员
+        if ("admin".equals(entity.getUsername()) || "ADMIN".equals(entity.getRole())) {
+            throw new BizException(10010, "不能禁用管理员用户");
         }
         
         entity.setStatus(request.getStatus());
